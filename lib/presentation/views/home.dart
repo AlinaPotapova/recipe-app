@@ -1,9 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 import 'package:recipe_app/common/widgets/async_search_anchor.dart';
-import 'package:recipe_app/domain/entities/recipe/recipe.dart';
 import 'package:recipe_app/presentation/views/recipe_view.dart';
+
+import '../../common/widgets/camera.dart';
+import '../../data/repositiries/db_repository.dart';
+import '../../data/services/hive_service.dart';
+import '../../main.dart';
+import '../../service_locator.dart';
+import '../widgets/custom_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,15 +19,45 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int value) {
+    setState(() {
+      _selectedIndex = value;
+    });
+
+    if (value == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CameraApp(
+                  cameras: [cameras[0]],
+                )),
+      );
+    }
+    if (value == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RecipeView(getIt<HiveService>()
+              .read()
+              .where((element) => element.isFavorite == true)
+              .toList()),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: CategoryWidget(),
@@ -45,6 +81,34 @@ class _HomeState extends State<Home> {
                     height: 50, // Adjust as needed
                     child: CustomAsyncSearchAnchor()),
               ),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  getIt<HiveService>().deleteAll();
+                });
+              },
+              child: Text("delete"),
+            ),
+            Expanded(
+                flex: 2,
+                child:
+                    Container(color: Colors.limeAccent, child: CustomCard())),
+            const SizedBox(height: 20),
+            BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.favorite_border), label: 'Saved'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.camera), label: 'Camera'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.account_box_outlined), label: 'Account'),
+              ],
+              selectedItemColor: Colors.green[500],
+              onTap: _onItemTapped,
+              currentIndex: _selectedIndex,
             ),
           ],
         ),
@@ -76,6 +140,7 @@ class CategoryWidget extends StatelessWidget {
       'color': Colors.pink[100]
     },
   ];
+
   Future<Map> fetchUsers() async {
     try {
       Response response =
@@ -97,50 +162,42 @@ class CategoryWidget extends StatelessWidget {
         ),
         title: Text("Categories"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: categories.map((category) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    if (category['label'] == "Random") {
-                      final recipe = await fetchUsers();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RecipeView(Recipe(
-                                id: '1',
-                                ingredients: [],
-                                name: recipe["strMeal"],
-                                instructions: recipe["strMealThumb"],
-                                cookTime: 100,
-                                cuisineType: recipe["strArea"],
-                                category: recipe["strCategory"]))),
-                      );
-                    }
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: category['color'],
-                    radius: 40,
-                    child: Icon(
-                      category['icon'],
-                      size: 40,
-                      color: Colors.black87,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: categories.map((category) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      if (category['label'] == "Random") {
+                        getIt<FirebaseRepository>().addRecipe(Recipe);
+                      }
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: category['color'],
+                      radius: 40,
+                      child: Icon(
+                        category['icon'],
+                        size: 40,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  category['label'],
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ],
-            );
-          }).toList(),
+                  const SizedBox(height: 8),
+                  Text(
+                    category['label'],
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
         ),
       ),
     );

@@ -20,16 +20,20 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Recipe {
-  String get id => throw _privateConstructorUsedError;
-  List<String> get ingredients => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get instructions => throw _privateConstructorUsedError;
-  int get cookTime => throw _privateConstructorUsedError;
-  String get cuisineType => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  List<String>? get ingredients => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get instructions => throw _privateConstructorUsedError;
+  int? get cookTime => throw _privateConstructorUsedError;
+  String? get cuisineType => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
 
+  /// Serializes this Recipe to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Recipe
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RecipeCopyWith<Recipe> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -39,13 +43,13 @@ abstract class $RecipeCopyWith<$Res> {
       _$RecipeCopyWithImpl<$Res, Recipe>;
   @useResult
   $Res call(
-      {String id,
-      List<String> ingredients,
-      String name,
-      String instructions,
-      int cookTime,
-      String cuisineType,
-      String category});
+      {String? id,
+      List<String>? ingredients,
+      String? name,
+      String? instructions,
+      int? cookTime,
+      String? cuisineType,
+      String? category});
 }
 
 /// @nodoc
@@ -58,46 +62,48 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Recipe
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? ingredients = null,
-    Object? name = null,
-    Object? instructions = null,
-    Object? cookTime = null,
-    Object? cuisineType = null,
-    Object? category = null,
+    Object? id = freezed,
+    Object? ingredients = freezed,
+    Object? name = freezed,
+    Object? instructions = freezed,
+    Object? cookTime = freezed,
+    Object? cuisineType = freezed,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      ingredients: null == ingredients
+              as String?,
+      ingredients: freezed == ingredients
           ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      name: null == name
+              as List<String>?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      instructions: null == instructions
+              as String?,
+      instructions: freezed == instructions
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
-              as String,
-      cookTime: null == cookTime
+              as String?,
+      cookTime: freezed == cookTime
           ? _value.cookTime
           : cookTime // ignore: cast_nullable_to_non_nullable
-              as int,
-      cuisineType: null == cuisineType
+              as int?,
+      cuisineType: freezed == cuisineType
           ? _value.cuisineType
           : cuisineType // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
+              as String?,
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -110,13 +116,13 @@ abstract class _$$RecipeImplCopyWith<$Res> implements $RecipeCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      List<String> ingredients,
-      String name,
-      String instructions,
-      int cookTime,
-      String cuisineType,
-      String category});
+      {String? id,
+      List<String>? ingredients,
+      String? name,
+      String? instructions,
+      int? cookTime,
+      String? cuisineType,
+      String? category});
 }
 
 /// @nodoc
@@ -127,46 +133,48 @@ class __$$RecipeImplCopyWithImpl<$Res>
       _$RecipeImpl _value, $Res Function(_$RecipeImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Recipe
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? ingredients = null,
-    Object? name = null,
-    Object? instructions = null,
-    Object? cookTime = null,
-    Object? cuisineType = null,
-    Object? category = null,
+    Object? id = freezed,
+    Object? ingredients = freezed,
+    Object? name = freezed,
+    Object? instructions = freezed,
+    Object? cookTime = freezed,
+    Object? cuisineType = freezed,
+    Object? category = freezed,
   }) {
     return _then(_$RecipeImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      ingredients: null == ingredients
+              as String?,
+      ingredients: freezed == ingredients
           ? _value._ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      name: null == name
+              as List<String>?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      instructions: null == instructions
+              as String?,
+      instructions: freezed == instructions
           ? _value.instructions
           : instructions // ignore: cast_nullable_to_non_nullable
-              as String,
-      cookTime: null == cookTime
+              as String?,
+      cookTime: freezed == cookTime
           ? _value.cookTime
           : cookTime // ignore: cast_nullable_to_non_nullable
-              as int,
-      cuisineType: null == cuisineType
+              as int?,
+      cuisineType: freezed == cuisineType
           ? _value.cuisineType
           : cuisineType // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
+              as String?,
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -176,7 +184,7 @@ class __$$RecipeImplCopyWithImpl<$Res>
 class _$RecipeImpl with DiagnosticableTreeMixin implements _Recipe {
   const _$RecipeImpl(
       {required this.id,
-      required final List<String> ingredients,
+      required final List<String>? ingredients,
       required this.name,
       required this.instructions,
       required this.cookTime,
@@ -188,25 +196,27 @@ class _$RecipeImpl with DiagnosticableTreeMixin implements _Recipe {
       _$$RecipeImplFromJson(json);
 
   @override
-  final String id;
-  final List<String> _ingredients;
+  final String? id;
+  final List<String>? _ingredients;
   @override
-  List<String> get ingredients {
+  List<String>? get ingredients {
+    final value = _ingredients;
+    if (value == null) return null;
     if (_ingredients is EqualUnmodifiableListView) return _ingredients;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ingredients);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  final String name;
+  final String? name;
   @override
-  final String instructions;
+  final String? instructions;
   @override
-  final int cookTime;
+  final int? cookTime;
   @override
-  final String cuisineType;
+  final String? cuisineType;
   @override
-  final String category;
+  final String? category;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -246,7 +256,7 @@ class _$RecipeImpl with DiagnosticableTreeMixin implements _Recipe {
                 other.category == category));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -258,7 +268,9 @@ class _$RecipeImpl with DiagnosticableTreeMixin implements _Recipe {
       cuisineType,
       category);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Recipe
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RecipeImplCopyWith<_$RecipeImpl> get copyWith =>
@@ -274,32 +286,35 @@ class _$RecipeImpl with DiagnosticableTreeMixin implements _Recipe {
 
 abstract class _Recipe implements Recipe {
   const factory _Recipe(
-      {required final String id,
-      required final List<String> ingredients,
-      required final String name,
-      required final String instructions,
-      required final int cookTime,
-      required final String cuisineType,
-      required final String category}) = _$RecipeImpl;
+      {required final String? id,
+      required final List<String>? ingredients,
+      required final String? name,
+      required final String? instructions,
+      required final int? cookTime,
+      required final String? cuisineType,
+      required final String? category}) = _$RecipeImpl;
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$RecipeImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
-  List<String> get ingredients;
+  List<String>? get ingredients;
   @override
-  String get name;
+  String? get name;
   @override
-  String get instructions;
+  String? get instructions;
   @override
-  int get cookTime;
+  int? get cookTime;
   @override
-  String get cuisineType;
+  String? get cuisineType;
   @override
-  String get category;
+  String? get category;
+
+  /// Create a copy of Recipe
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RecipeImplCopyWith<_$RecipeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
