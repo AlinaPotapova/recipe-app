@@ -1,11 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:recipe_app/common/widgets/async_search_anchor.dart';
 import 'package:recipe_app/presentation/views/recipe_view.dart';
 
 import '../../common/widgets/camera.dart';
-import '../../data/repositiries/db_repository.dart';
 import '../../data/services/hive_service.dart';
 import '../../main.dart';
 import '../../service_locator.dart';
@@ -145,7 +143,10 @@ class CategoryWidget extends StatelessWidget {
     try {
       Response response =
           await Dio().get('https://www.themealdb.com/api/json/v1/1/random.php');
-      return response.data["meals"][0];
+      if (response.statusCode == 200) {
+        print('Success');
+      }
+      return response.data.first;
     } catch (e) {
       print('Error fetching users: $e');
     }
@@ -175,7 +176,7 @@ class CategoryWidget extends StatelessWidget {
                   GestureDetector(
                     onTap: () async {
                       if (category['label'] == "Random") {
-                        getIt<FirebaseRepository>().addRecipe(Recipe);
+                        //     getIt<FirebaseRepository>().addRecipe(Recipe);
                       }
                     },
                     child: CircleAvatar(

@@ -6,6 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:recipe_app/domain/entities/recipe/hive_recipe.dart'; // Import your HiveRecipe class
 import 'package:recipe_app/presentation/views/home.dart';
 import 'package:recipe_app/utils/get_it.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'firebase_options.dart';
 
@@ -47,7 +48,24 @@ void main() async {
     }
   });
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  runApp(const MyApp());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://bfb42831ddbad558c073177b1b0fa781@o4509085452206080.ingest.de.sentry.io/4509085456793680';
+      // Adds request headers and IP for users, for more info visit:
+      // https://docs.sentry.io/platforms/dart/guides/flutter/data-management/data-collected/
+      options.sendDefaultPii = true;
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+      // The sampling rate for profiling is relative to tracesSampleRate
+      // Setting to 1.0 will profile 100% of sampled transactions:
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(SentryWidget(child: const MyApp())),
+  );
+  // TODO: Remove this line after sending the first sample event to sentry.
+  //await Sentry.captureFeedback(feedback)captureException(StateError('This is a sample exception.'));
 }
 
 Future<void> request() async {
