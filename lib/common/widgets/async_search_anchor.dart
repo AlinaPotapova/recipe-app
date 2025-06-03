@@ -135,35 +135,3 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
     );
   }
 }
-
-// Mimics a remote API.
-/*class _FakeAPI {
-  static const List<String> _kOptions = <String>[
-    'dr zimmer',
-    'dr morgan',
-    'dr rex',
-  ];
-  Future<Map> fetchUsers() async {
-    try {
-      Response response = await Dio().get(
-        'https://www.themealdb.com/api/json/v1/1/filter.php?',
-        queryParameters: {
-          'i': 'egg',
-        },
-      );
-    } catch (e) {
-      print('Error fetching users: $e');
-    }
-    return {};
-  }
-
-   Future<Iterable<String>> search(String query) async {
-    if (query == '') {
-      return const Iterable<String>.empty();
-    }
-    await fetchUsers();
-    return _kOptions.where((String option) {
-      return option.contains(query.toLowerCase());
-    });
-  }
-}*/

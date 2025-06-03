@@ -1,12 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:recipe_app/common/widgets/async_search_anchor.dart';
+import 'package:recipe_app/domain/entities/category/category_provider.dart';
 import 'package:recipe_app/presentation/views/recipe_view.dart';
+import 'package:recipe_app/utils/app_bindings.dart';
 
 import '../../common/widgets/camera.dart';
 import '../../data/services/hive_service.dart';
-import '../../main.dart';
-import '../../service_locator.dart';
 import '../widgets/custom_card.dart';
 
 class Home extends StatefulWidget {
@@ -18,6 +18,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
+  final globals = GetIt.instance<AppGlobals>();
+  final hiveService = GetIt.instance<HiveService>();
 
   void _onItemTapped(int value) {
     setState(() {
@@ -29,7 +31,7 @@ class _HomeState extends State<Home> {
         context,
         MaterialPageRoute(
             builder: (context) => CameraApp(
-                  cameras: [cameras[0]],
+                  cameras: [globals.cameras[0]],
                 )),
       );
     }
@@ -37,7 +39,7 @@ class _HomeState extends State<Home> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => RecipeView(getIt<HiveService>()
+          builder: (context) => RecipeView(hiveService
               .read()
               .where((element) => element.isFavorite == true)
               .toList()),
@@ -83,7 +85,7 @@ class _HomeState extends State<Home> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  getIt<HiveService>().deleteAll();
+                  hiveService.deleteAll();
                 });
               },
               child: Text("delete"),
@@ -116,42 +118,10 @@ class _HomeState extends State<Home> {
 }
 
 class CategoryWidget extends StatelessWidget {
-  final List<Map<String, dynamic>> categories = [
-    {
-      'icon': Icons.egg,
-      'label': 'Chicken',
-      'color': Color.fromARGB(255, 185, 243, 187)
-    },
-    {
-      'icon': Icons.set_meal,
-      'label': 'Beef',
-      'color': Color.fromARGB(255, 244, 241, 211)
-    },
-    {
-      'icon': Icons.fiber_dvr_outlined,
-      'label': 'Fish',
-      'color': Colors.blue[100]
-    },
-    {
-      'icon': Icons.account_circle,
-      'label': 'Random',
-      'color': Colors.pink[100]
-    },
-  ];
+  CategoryWidget({super.key});
 
-  Future<Map> fetchUsers() async {
-    try {
-      Response response =
-          await Dio().get('https://www.themealdb.com/api/json/v1/1/random.php');
-      if (response.statusCode == 200) {
-        print('Success');
-      }
-      return response.data.first;
-    } catch (e) {
-      print('Error fetching users: $e');
-    }
-    return {};
-  }
+  // refactor
+  final CategoryProvider categoryProvider = CategoryProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -169,21 +139,21 @@ class CategoryWidget extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: categories.map((category) {
+            children: categoryProvider.categories.map((category) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      if (category['label'] == "Random") {
+                      if (category.label == "Random") {
                         //     getIt<FirebaseRepository>().addRecipe(Recipe);
                       }
                     },
                     child: CircleAvatar(
-                      backgroundColor: category['color'],
+                      backgroundColor: category.color,
                       radius: 40,
                       child: Icon(
-                        category['icon'],
+                        category.icon,
                         size: 40,
                         color: Colors.black87,
                       ),
@@ -191,7 +161,7 @@ class CategoryWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    category['label'],
+                    category.label,
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w500),
                   ),
@@ -204,3 +174,5 @@ class CategoryWidget extends StatelessWidget {
     );
   }
 }
+
+//List
