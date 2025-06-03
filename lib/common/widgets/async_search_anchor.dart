@@ -1,6 +1,11 @@
 import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/data/services/hive_service.dart';
+
+import '../../domain/entities/recipe/hive_recipe.dart';
+import '../../service_locator.dart';
 
 class CustomAsyncSearchAnchor extends StatefulWidget {
   const CustomAsyncSearchAnchor({super.key});
@@ -18,7 +23,7 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
   bool isChecked = false;
 
   TextEditingController controller = TextEditingController();
-  List meal = [];
+  List<HiveRecipe> meal = [];
 
   Future<List> _search(String query) async {
     await fetchUsers(query);
@@ -55,7 +60,11 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
       );
       final List list = response.data["meals"];
       for (final item in list) {
-        meal.add(item["strMeal"]);
+        meal.add(HiveRecipe(
+            id: item["idMeal"],
+            name: item["strMeal"],
+            photoUrl: item["strMealThumb"],
+            isFavorite: false));
       }
     } catch (e) {
       print('Error fetching users: $e');
@@ -98,15 +107,12 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
           );
         },
         suggestionsBuilder: (BuildContext context, controller) async {
-          final options = (await _search(controller.text))?.toList();
-          if (options == null) {
-            return _lastOptions;
-          }
+          final options = (await _search(controller.text)).toList();
 
           _lastOptions = List<ListTile>.generate(meal.length, (int index) {
-            final String item = meal[index];
+            final item = meal[index].name;
             return ListTile(
-              title: Text(item),
+              title: Text(item!),
               trailing: StatefulBuilder(
                 builder: (BuildContext context,
                     void Function(void Function()) setState) {
@@ -115,6 +121,7 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
                     onChanged: (bool? value) {
                       setState(() {
                         _checkedStates[item] = value!;
+                        getIt<HiveService>().add(meal[index]);
                       });
                     },
                   );
@@ -128,37 +135,3 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
     );
   }
 }
-
-// Mimics a remote API.
-/*class _FakeAPI {
-  static const List<String> _kOptions = <String>[
-    'dr zimmer',
-    'dr morgan',
-    'dr rex',
-  ];
-  Future<Map> fetchUsers() async {
-    try {
-      Response response = await Dio().get(
-        'https://www.themealdb.com/api/json/v1/1/filter.php?',
-        queryParameters: {
-          'i': 'egg',
-        },
-      );
-    } catch (e) {
-      print('Error fetching users: $e');
-    }
-    return {};
-  }
-
-   Future<Iterable<String>> search(String query) async {
-    if (query == '') {
-      return const Iterable<String>.empty();
-    }
-    await fetchUsers();
-    return _kOptions.where((String option) {
-      return option.contains(query.toLowerCase());
-    });
-  }
-}*/
-
-

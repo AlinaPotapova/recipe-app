@@ -14,7 +14,7 @@ class AuthBloc extends Bloc<AppEvent, AppState> {
     on<_Logout>((event, emit) {});
 
     on<_Registration>((event, emit) {
-      //TODO
+
     });
   }
 }
