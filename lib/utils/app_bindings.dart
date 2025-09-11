@@ -1,37 +1,20 @@
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:recipe_app/utils/sentry_setup.dart';
 
+import '../data/repositiries/recipe/firebase_repository.dart';
+import '../data/repositiries/recipe/recipe_repository.dart';
 import '../data/services/auth_service.dart';
 import '../data/services/hive_service.dart';
-import '../main.dart';
+import 'camera_setup.dart';
 
 class AppBindings {
-  void setup() {
-    setupCameras();
-    setupSentry();
+  AppBindings();
+
+  void setup() async {
+    CameraSetup().setup();
+    SentrySetup().setup();
     setupGetIt();
-  }
-
-  //// Camera
-  void setupCameras() async {
-    final globals = GetIt.instance<AppGlobals>();
-    globals.cameras = await availableCameras();
-  }
-
-  //Sentry
-  void setupSentry() async {
-    await SentryFlutter.init(
-      (options) {
-        options.dsn =
-            'https://bfb42831ddbad558c073177b1b0fa781@o4509085452206080.ingest.de.sentry.io/4509085456793680';
-        options.sendDefaultPii = true;
-        options.tracesSampleRate = 1.0;
-        options.profilesSampleRate = 1.0;
-      },
-      appRunner: () => runApp(SentryWidget(child: const MyApp())),
-    );
   }
 }
 
@@ -40,9 +23,12 @@ final getIt = GetIt.instance;
 
 void setupGetIt() {
   getIt.registerLazySingleton<AuthService>(() => AuthService());
-  getIt.registerLazySingleton<HiveService>(() => HiveService());
-
+  getIt.registerSingleton<HiveService>(HiveService(), signalsReady: true);
   getIt.registerSingleton<AppGlobals>(AppGlobals());
+  getIt.registerLazySingleton<RecipeRepository>(() => FirebaseRepository());
+  getIt.registerLazySingleton<RecipeRepository>(
+    () => FirebaseRepository(),
+  );
 }
 
 class AppGlobals {

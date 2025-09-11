@@ -1,16 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/entities/recipe/recipe.dart';
+import '../../../domain/entities/recipe/recipe.dart';
+import 'recipe_repository.dart';
 
-abstract class DbConnection {
-  void addRecipe(Recipe recipe);
-
-  void getRecipe();
-
-  void deleteRecipe(int id);
-}
-
-class FirebaseRepository implements DbConnection {
+class FirebaseRepository implements RecipeRepository {
   @override
   void addRecipe(Recipe recipe) {
     FirebaseFirestore.instance.collection('recipe').add(recipe.toJson());

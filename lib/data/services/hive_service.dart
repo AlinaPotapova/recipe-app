@@ -3,10 +3,8 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:recipe_app/domain/entities/recipe/hive_recipe.dart';
 
 class HiveService {
-  // 1. Use a static constant for the box name.
   static const String _boxName = "recipeBox";
 
-  // 2. Initialize the box in a static method and use a late final variable.
   static final Box<HiveRecipe> _box = Hive.box("recipeBox");
 
   // 3. Initialize the box asynchronously.
@@ -19,13 +17,10 @@ class HiveService {
 
   // 5. Use more descriptive method names.
   Future<void> add(HiveRecipe recipe) async {
-    // 6. No need to create a local variable for the box.
     await _box.add(recipe);
   }
 
-  // 7. Use a more specific return type.
   List<HiveRecipe> read() {
-    // 8. Use type casting for clarity.
     return _box.values.toList();
   }
 

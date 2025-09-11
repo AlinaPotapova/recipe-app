@@ -1,3 +1,3 @@
 abstract class DataSource {
-  Future fetchData();
+  Future fetchRandomRecipe();
 }

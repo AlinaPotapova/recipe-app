@@ -22,18 +22,21 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  //setupLocator();
+
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform, name: 'recipe-app');
-  AppBindings().setup();
 
   await Hive.initFlutter();
   //final db = FirebaseFirestore.instance;
   Hive.registerAdapter(HiveRecipeAdapter());
 
-  await Hive.openBox<HiveRecipe>(
-      'recipeBox'); // Open the box here and specify the type
+  await Hive.openBox<HiveRecipe>('recipeBox');
+
+  AppBindings().setup();
 
   request();
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {

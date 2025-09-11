@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/common/widgets/text_editing_controller.dart';
 import 'package:recipe_app/data/services/hive_service.dart';
 
 import '../../domain/entities/recipe/hive_recipe.dart';
-import '../../service_locator.dart';
+import '../../utils/app_bindings.dart';
 
 class CustomAsyncSearchAnchor extends StatefulWidget {
   const CustomAsyncSearchAnchor({super.key});
@@ -22,11 +23,12 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
 
   bool isChecked = false;
 
-  TextEditingController controller = TextEditingController();
+  late CustomTextEditingController controller;
+
   List<HiveRecipe> meal = [];
 
   Future<List> _search(String query) async {
-    await fetchUsers(query);
+    await fetchRecipes(query);
     return meal;
   }
 
@@ -47,7 +49,7 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
     return await _search(controller.text);
   }
 
-  Future<List> fetchUsers(String text) async {
+  Future<List> fetchRecipes(String text) async {
     Response response;
 
     try {
