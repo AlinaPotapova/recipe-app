@@ -10,12 +10,8 @@ class FirebaseRepository implements RecipeRepository {
   }
 
   @override
-  void deleteRecipe(int id) {
-    // TODO: implement deleteRecipe
-  }
+  void deleteRecipe(int id) {}
 
   @override
-  void getRecipe() {
-    // TODO: implement getRecipe
-  }
+  void getRecipe() {}
 }

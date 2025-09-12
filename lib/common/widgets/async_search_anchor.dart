@@ -23,7 +23,7 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
 
   bool isChecked = false;
 
-  late CustomTextEditingController controller;
+  TextEditingController controller = TextEditingController();
 
   List<HiveRecipe> meal = [];
 
