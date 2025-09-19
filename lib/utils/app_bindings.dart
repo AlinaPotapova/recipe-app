@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 
 import '../data/repositories/recipe/firebase_repository.dart';
 import '../data/repositories/recipe/recipe_repository.dart';
-import '../data/services/auth_service.dart';
+import '../data/auth/auth_service.dart';
 import '../data/services/hive_service.dart';
 import 'camera_setup.dart';
 import 'sentry_setup.dart';

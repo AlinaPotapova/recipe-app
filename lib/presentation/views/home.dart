@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:recipe_app/common/widgets/async_search_anchor.dart';
+import 'package:recipe_app/presentation/widgets/async_search_anchor.dart';
 import 'package:recipe_app/domain/entities/category/category_provider.dart';
 import 'package:recipe_app/presentation/views/recipe_view.dart';
 import 'package:recipe_app/utils/app_bindings.dart';
 
-import '../../common/widgets/camera.dart';
+import '../widgets/camera.dart';
 import '../../data/services/hive_service.dart';
 import '../widgets/custom_card.dart';
 

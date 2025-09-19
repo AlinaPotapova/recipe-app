@@ -1,4 +1,4 @@
-part of '../app_bloc.dart';
+part of 'app_bloc.dart';
 
 @freezed
 class AppEvent with _$AppEvent {

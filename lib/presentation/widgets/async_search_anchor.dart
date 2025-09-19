@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/common/widgets/text_editing_controller.dart';
+import 'package:recipe_app/presentation/widgets/text_editing_controller.dart';
 import 'package:recipe_app/data/services/hive_service.dart';
 
 import '../../domain/entities/recipe/hive_recipe.dart';

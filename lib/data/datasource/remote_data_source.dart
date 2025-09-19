@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:recipe_app/data/data_source.dart';
+import 'package:recipe_app/data/datasource/data_source.dart';
 import 'package:recipe_app/data/services/hive_service.dart';
 
-import '../domain/entities/recipe/hive_recipe.dart';
+import '../../domain/entities/recipe/hive_recipe.dart';
 
-class HttpDataSource implements DataSource {
+class RemoteDataSource implements DataSource {
   HiveService hiveService;
-  HttpDataSource({required this.hiveService});
+  RemoteDataSource({required this.hiveService});
 
   @override
   Future<Map> fetchRandomRecipe() async {

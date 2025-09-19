@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:recipe_app/data/services/auth_service.dart';
+import 'package:recipe_app/data/auth/auth_service.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});

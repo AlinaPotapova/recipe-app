@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'event/recipe_event.dart';
-part 'state/recipe_state.dart';
+part 'recipe_event.dart';
+part 'recipe_state.dart';
 
 class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
   RecipeBloc() : super(const RecipeState()) {
