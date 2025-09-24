@@ -3,8 +3,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:recipe_app/domain/entities/recipe/hive_recipe.dart'; // Import your HiveRecipe class
-import 'package:recipe_app/presentation/views/home.dart';
+import 'package:recipe_app/presentation/views/home_view.dart';
 import 'package:recipe_app/utils/app_bindings.dart';
+import 'package:recipe_app/utils/di/dependency-injection.dart';
 import 'package:recipe_app/utils/firebase_messaging_setup.dart';
 import 'firebase_options.dart';
 
@@ -28,6 +29,8 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform, name: 'recipe-app');
 
   await _initHive();
+
+  setupGetIt();
 
   AppBindings().setup();
 
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Home(),
+      home: const HomeView(),
     );
   }
 }

@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:recipe_app/data/repositories/recipe/recipe_repository.dart';
 import 'package:recipe_app/presentation/widgets/async_search_anchor.dart';
 import 'package:recipe_app/domain/entities/category/category_provider.dart';
 import 'package:recipe_app/presentation/views/recipe_view.dart';
 import 'package:recipe_app/utils/app_bindings.dart';
+import 'package:recipe_app/utils/di/dependency-injection.dart';
 
 import '../widgets/camera.dart';
-import '../../data/services/hive_service.dart';
+import '../../data/datasource/hive_recipe_data_source.dart';
 import '../widgets/custom_card.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
   final globals = GetIt.instance<AppGlobals>();
-  final hiveService = GetIt.instance<HiveService>();
+  final hiveService = GetIt.instance<HiveRecipeDataSource>();
 
   void _onItemTapped(int value) {
     setState(() {
@@ -131,7 +133,7 @@ class CategoryWidget extends StatelessWidget {
           onTap: null,
           child: const Icon(Icons.menu),
         ),
-        title: Text("Categories"),
+        title: const Text("Categories"),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -146,7 +148,7 @@ class CategoryWidget extends StatelessWidget {
                   GestureDetector(
                     onTap: () async {
                       if (category.label == "Random") {
-                        //     getIt<FirebaseRepository>().addRecipe(Recipe);
+                         //getIt<RecipeRepository>().fetchRandomRecipe();
                       }
                     },
                     child: CircleAvatar(

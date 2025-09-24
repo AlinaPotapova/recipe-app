@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:recipe_app/presentation/views/home.dart';
+import 'package:recipe_app/presentation/views/home_view.dart';
 import 'package:recipe_app/presentation/views/log_in_view.dart';
 
 class AuthService {
@@ -15,7 +15,7 @@ class AuthService {
 
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => const Home()));
+          MaterialPageRoute(builder: (BuildContext context) => const HomeView()));
     } on FirebaseAuthException catch (e) {
       String message = e.message.toString();
       if (e.code == 'weak-password') {
@@ -44,7 +44,7 @@ class AuthService {
 
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => const Home()));
+          MaterialPageRoute(builder: (BuildContext context) => const HomeView()));
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'invalid-email') {
@@ -67,6 +67,6 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => LoginView()));
+        MaterialPageRoute(builder: (BuildContext context) => const LoginView()));
   }
 }

@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/utils/di/dependency-injection.dart';
 
-import '../../data/services/hive_service.dart';
-import '../../utils/app_bindings.dart';
-import '../views/recipe_ui.dart';
+import '../../data/datasource/hive_recipe_data_source.dart';
+import 'recipe_ui.dart';
 
 class CustomCard extends StatelessWidget {
+  const CustomCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: getIt<HiveService>().listenable,
+      valueListenable: getIt<HiveRecipeDataSource>().listenable,
       builder: (context, box, _) {
-        List recipes = getIt<HiveService>().read();
+        List recipes = getIt<HiveRecipeDataSource>().read();
 
         if (recipes.isEmpty) {
           return const Center(child: Text("No recipes found"));
         }
         if (recipes.length > 10) {
-          getIt<HiveService>().delete(0);
+          getIt<HiveRecipeDataSource>().delete(0);
         }
 
         return ListView.builder(

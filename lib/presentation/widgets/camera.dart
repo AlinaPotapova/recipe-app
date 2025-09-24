@@ -61,7 +61,7 @@ class _CameraAppState extends State<CameraApp> {
             },
           ),
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Take a picture',
             style: TextStyle(color: Colors.white),
           ),

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/presentation/widgets/text_editing_controller.dart';
-import 'package:recipe_app/data/services/hive_service.dart';
+import 'package:recipe_app/data/constant/constant.dart';
+import 'package:recipe_app/data/datasource/hive_recipe_data_source.dart';
+import 'package:recipe_app/utils/di/dependency-injection.dart';
 
 import '../../domain/entities/recipe/hive_recipe.dart';
-import '../../utils/app_bindings.dart';
 
 class CustomAsyncSearchAnchor extends StatefulWidget {
   const CustomAsyncSearchAnchor({super.key});
@@ -54,8 +54,8 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
 
     try {
       meal = [];
-      response = await Dio().get(
-        'https://www.themealdb.com/api/json/v1/1/filter.php?',
+      response = await dio.get(
+       kBaseUrl,
         queryParameters: {
           'i': text,
         },
@@ -123,7 +123,7 @@ class _CustomAsyncSearchAnchorState extends State<CustomAsyncSearchAnchor> {
                     onChanged: (bool? value) {
                       setState(() {
                         _checkedStates[item] = value!;
-                        getIt<HiveService>().add(meal[index]);
+                        getIt<HiveRecipeDataSource>().add(meal[index]);
                       });
                     },
                   );

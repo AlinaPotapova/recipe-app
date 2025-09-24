@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:recipe_app/domain/entities/recipe/hive_recipe.dart';
 
-class HiveService {
+class HiveRecipeDataSource {
   static const String _boxName = "recipeBox";
 
   static final Box<HiveRecipe> _box = Hive.box("recipeBox");
